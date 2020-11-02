@@ -101,3 +101,21 @@ describe("get_revenue_for_crop", () => {
     expect(get_revenue_for_crop(input)).toBe(60);
   });
 });
+
+describe("get_profit_for_crop", () => {
+  test("Get profit for crop, simple", () => {
+      const corn = {
+          name: "corn",
+          yield: 3, // per plant
+          costs: 0.5, // per plant
+          sales_price: 2, // per yield
+        };
+        const input = {
+          crop: corn,
+          num_plants: 10,
+        };
+    // assuming the values from previous tests that passed for revenue and costs.
+    // profit is revenue - costs.
+    expect(get_profit_for_crop(input)).toBe(55);
+  });
+});
