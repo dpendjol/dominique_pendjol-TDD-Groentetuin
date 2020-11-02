@@ -20,7 +20,11 @@ const get_revenue_for_plant = (plant) => {
 }
 
 const get_revenue_for_crop = (input) => {
-    return input.num_plants * get_revenue_for_plant(input.crop)
+    return input.num_plants * get_revenue_for_plant(input.crop);
+}
+
+const get_profit_for_crop = (input) => {
+    return get_revenue_for_crop(input) - get_costs_for_crop(input);
 }
 
 module.exports = {
@@ -31,4 +35,5 @@ module.exports = {
     get_costs_for_crop,
     get_revenue_for_plant,
     get_revenue_for_crop,
+    get_profit_for_crop,
   }

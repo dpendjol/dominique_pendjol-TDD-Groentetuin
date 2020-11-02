@@ -7,6 +7,7 @@ const {
     get_costs_for_crop,
     get_revenue_for_plant,
     get_revenue_for_crop,
+    get_profit_for_crop
   } = require("./farm");
   
   describe("get_yield_for_plant", () => {
@@ -117,5 +118,36 @@ describe("get_profit_for_crop", () => {
     // assuming the values from previous tests that passed for revenue and costs.
     // profit is revenue - costs.
     expect(get_profit_for_crop(input)).toBe(55);
+  });
+});
+
+describe("get_total_profit", () => {
+  test("Calculate total profit with multiple crops", () => {
+    const corn = {
+      name: "corn",
+      yield: 3,
+      costs: 0.5, //costs corn = 2.5
+      sales_price: 2, // revenue corn = 30
+    };
+    const pumpkin = {
+      name: "pumpkin",
+      yield: 4,
+      costs: 1, // costs pumkin = 2
+      sales_price: 3, // costs pumkin = 24
+    };
+    const crops = [
+      { crop: corn, num_plants: 5 },
+      { crop: pumpkin, num_plants: 2 },
+    ];
+    expect(get_total_profit({ crops })).toBe(49.5);
+  });
+
+  test("Calculate total profit with 0 amount", () => {
+    const corn = {
+      name: "corn",
+      yield: 3,
+    };
+    const crops = [{ crop: corn, num_plants: 0 }];
+    expect(get_total_profit({ crops })).toBe(0);
   });
 });
