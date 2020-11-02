@@ -55,3 +55,18 @@ const {
       expect(get_total_yield({ crops })).toBe(0);
     });
   });
+
+  describe("get_costs_for_crop", () => {
+    test("Get costs for crop, simple", () => {
+        const corn = {
+            name: "corn",
+            yield: 3,
+            cost: 0.5,
+          };
+          const input = {
+            crop: corn,
+            num_crops: 10,
+          };
+      expect(get_costs_for_crop(input)).toBe(5);
+    });
+});
