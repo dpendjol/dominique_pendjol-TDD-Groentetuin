@@ -2,6 +2,8 @@ const {
     get_yield_for_plant,
     get_yield_for_crop,
     get_total_yield,
+    get_costs_for_plants,
+    get_costs_for_crop,
   } = require("./farm");
   
   describe("get_yield_for_plant", () => {
@@ -23,7 +25,7 @@ const {
       };
       const input = {
         crop: corn,
-        num_crops: 10,
+        num_plants: 10, //origineel is num_crops, maar naamgeving verwarrend gekozen. Dit is een input in de grond van het gewas corn bestaande uit 10 planten
       };
       expect(get_yield_for_crop(input)).toBe(30);
     });
@@ -40,8 +42,8 @@ const {
         yield: 4,
       };
       const crops = [
-        { crop: corn, num_crops: 5 },
-        { crop: pumpkin, num_crops: 2 },
+        { crop: corn, num_plants: 5 },
+        { crop: pumpkin, num_plants: 2 },
       ];
       expect(get_total_yield({ crops })).toBe(23);
     });
@@ -51,7 +53,7 @@ const {
         name: "corn",
         yield: 3,
       };
-      const crops = [{ crop: corn, num_crops: 0 }];
+      const crops = [{ crop: corn, num_plants: 0 }];
       expect(get_total_yield({ crops })).toBe(0);
     });
   });
@@ -61,11 +63,11 @@ const {
         const corn = {
             name: "corn",
             yield: 3,
-            cost: 0.5,
+            costs: 0.5,
           };
           const input = {
             crop: corn,
-            num_crops: 10,
+            num_plants: 10,
           };
       expect(get_costs_for_crop(input)).toBe(5);
     });
