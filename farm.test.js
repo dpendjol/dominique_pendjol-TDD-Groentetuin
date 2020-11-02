@@ -7,7 +7,8 @@ const {
     get_costs_for_crop,
     get_revenue_for_plant,
     get_revenue_for_crop,
-    get_profit_for_crop
+    get_profit_for_crop,
+    get_total_profit,
   } = require("./farm");
   
   describe("get_yield_for_plant", () => {
@@ -146,6 +147,8 @@ describe("get_total_profit", () => {
     const corn = {
       name: "corn",
       yield: 3,
+      costs: 0.5,
+      sales_price: 2,
     };
     const crops = [{ crop: corn, num_plants: 0 }];
     expect(get_total_profit({ crops })).toBe(0);
