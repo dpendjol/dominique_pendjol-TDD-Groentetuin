@@ -15,10 +15,20 @@ const get_costs_for_plants = (plant) => plant.costs;
 // costs per crop is the costs per plant * number of plants
 const get_costs_for_crop = (input) => input.num_plants * get_costs_for_plants(input.crop);
 
+const get_revenue_for_plant = (plant) => {
+    return plant.yield * plant.sales_price;
+}
+
+const get_revenue_for_crop = (input) => {
+    return input.num_plants * get_revenue_for_plant(input.crop)
+}
+
 module.exports = {
     get_yield_for_plant,
     get_yield_for_crop,
     get_total_yield,
     get_costs_for_plants,
     get_costs_for_crop,
+    get_revenue_for_plant,
+    get_revenue_for_crop,
   }
