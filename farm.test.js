@@ -72,3 +72,20 @@ const {
       expect(get_costs_for_crop(input)).toBe(5);
     });
 });
+
+describe("get_revenue_for_crop", () => {
+  test("Get revenue for crop, simple", () => {
+      const corn = {
+          name: "corn",
+          yield: 3,
+          costs: 0.5,
+          sales_price: 2,
+        };
+        const input = {
+          crop: corn,
+          num_plants: 10,
+        };
+    // revenue is the sales price per yield * yield per plant * numer of plants in crop
+    expect(get_revenue_for_crop(input)).toBe(60);
+  });
+});
