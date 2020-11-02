@@ -1,7 +1,7 @@
 //Kosten
 
-const get_yield_for_plant = () => {
-
+const get_yield_for_plant = (plant) => {
+    return plant.yield;
 }
 
 const get_yield_for_crop = () => {
@@ -9,7 +9,7 @@ const get_yield_for_crop = () => {
 }
 
 const get_total_yield = () => {
-    
+
 }
 
 
