@@ -3,12 +3,9 @@
 const get_yield_for_plant = (...args) => {
   const plant = args[0];
   const num_amount_of_influence = [];
-  console.log(args.length)
   if (args.length > 1 && args[1] !== undefined) {
     const env_vars = args[1];
-
     const env_vars_of_influence = Object.getOwnPropertyNames(env_vars);
-
     // check if plant is susseptable to enviroment variables, other words, does the factor property exist
     if (plant.factors !== undefined) {
       // loop tru the factors
