@@ -169,6 +169,11 @@ describe("get_yield_for_plant - enviroment", () => {
         low: 100,
         medium: -30,
         high: -60,
+      },
+      rain: {
+        low: 20,
+        medium: 30,
+        high: 40,
       }
     },
   };
@@ -178,15 +183,24 @@ describe("get_yield_for_plant - enviroment", () => {
     wind: "medium"
   };
 
-  const enviroment_factors_2 = {
+  const environment_factors_2 = {
     sun: "high",
     wind: "medium"
   }
 
+  const environment_factors_3 = {
+    sun: "high",
+    wind: "medium",
+    soil: "high"
+  }
+
   test("Get yield for plant with environment factor sun = low, wind = medium", () => {
-    expect(get_yield_for_plant(corn, environment_factors)).toBe(10,5);
+    expect(get_yield_for_plant(corn, environment_factors_1)).toBe(10.5);
   });
   test("Get yield for plant with environment factor sun = high, wind = medium", () => {
-    expect(get_yield_for_plant(corn, environment_factors)).toBe(31,5);
+    expect(get_yield_for_plant(corn, environment_factors_2)).toBe(31.5);
   });
+  test("Get yield for plant with enviroment factor sn = high, wind = medium, soil = high", () => {
+    expect(get_yield_for_plant(corn, environment_factors_3)).toBe(31.5);
+  })
 });
