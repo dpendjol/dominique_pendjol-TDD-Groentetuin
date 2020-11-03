@@ -259,7 +259,6 @@ describe("get_yield_for_crop - environment", () => {
   })
 });
 
-
 describe("get_profit_for_crop - environment", () => {
   const corn = {
     name: "corn",
@@ -316,4 +315,105 @@ describe("get_profit_for_crop - environment", () => {
   })
 });
 
+describe("get_total_profit - env", () => {
+    const corn = {
+      name: "corn",
+      yield: 3,
+      costs: 0.5,
+      sales_price: 2,
+      factors: {
+        sun: {
+          low: -50,
+          medium: 0,
+          high: 50,
+        },
+        wind: {
+          low: 100,
+          medium: -30,
+          high: -60,
+        },
+        rain: {
+          low: 20,
+          medium: 30,
+          high: 40,
+        }
+      },
+    };
 
+    const pumpkin = {
+      name: "pumpkin",
+      yield: 4,
+      costs: 1, // costs pumkin = 2
+      sales_price: 3, // costs pumkin = 24
+      factors: {
+        sun: {
+          low: -60,
+          medium: 0,
+          high: +60,
+        },
+        wind: {
+          low: 20,
+          medium: 0,
+          high: -20,
+        },
+        soil: {
+          low: 0,
+          medium: 5,
+          high: 10,
+        }
+      },
+    };
+
+    const environment_factors_1 = {
+      sun: "low",
+      wind: "medium"
+    };
+  
+    const environment_factors_2 = {
+      sun: "high",
+      wind: "medium"
+    }
+  
+    const environment_factors_3 = {
+      sun: "high",
+      wind: "medium",
+      soil: "high"
+    }
+
+  test("Get total profit with environment factor sun = low, wind = medium", () => {
+    const crops = [
+      { crop: corn, num_plants: 5 },
+      { crop: pumpkin, num_plants: 3 },
+    ];
+    expect(get_total_profit({ crops }, environment_factors_1)).toBe(18.9);
+  });
+
+  test("Get total profit with environment factor sun = high, wind = medium", () => {
+    const crops = [
+      { crop: corn, num_plants: 5 },
+      { crop: pumpkin, num_plants: 3 },
+    ];
+    expect(get_total_profit({ crops }, environment_factors_2)).toBe(84.1);
+  });
+  
+  test("Get total profit with enviroment factor sun = high, wind = medium, soil = high (shouldn't make a change to the one with-out soil", () => {
+    const crops = [
+      { crop: corn, num_plants: 5 },
+      { crop: pumpkin, num_plants: 3 },
+    ];
+    expect(get_total_profit({ crops }, environment_factors_2)).toBe(84.1);
+  });
+
+  
+
+  test("Get total profit with environment factor sun = low, wind = medium with 0 amount", () => {
+    const corn = {
+      name: "corn",
+      yield: 3,
+      costs: 0.5,
+      sales_price: 2,
+    };
+    const crops = [{ crop: corn, num_plants: 0 }];
+    expect(get_total_profit({ crops }, environment_factors_1)).toBe(0);
+  });
+});
