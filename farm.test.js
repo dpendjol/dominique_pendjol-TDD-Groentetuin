@@ -404,8 +404,6 @@ describe("get_total_profit - env", () => {
     expect(get_total_profit({ crops }, environment_factors_2)).toBe(84.1);
   });
 
-  
-
   test("Get total profit with environment factor sun = low, wind = medium with 0 amount", () => {
     const corn = {
       name: "corn",
