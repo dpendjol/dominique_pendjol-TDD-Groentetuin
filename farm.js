@@ -63,7 +63,11 @@ const get_profit_for_crop = (... args) => {
 }
 
 // total profits is the sum of all seperate profits
-const get_total_profit = (input) => input.crops.reduce((total, item) => total + get_profit_for_crop(item),0)
+const get_total_profit = (...args) => {
+  const [input, env_factors] = args;
+  const calculated = input.crops.reduce((total, item) => total + get_profit_for_crop(item, env_factors),0)
+  return Math.round(calculated * 10) / 10 ;
+}
 
 module.exports = {
     get_yield_for_plant,
