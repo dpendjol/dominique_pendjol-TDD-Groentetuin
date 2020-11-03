@@ -1,13 +1,10 @@
 
-// display value of yield property from plant
-
-const { getEnabledCategories } = require("trace_events");
-
 // to account for enviroment used spread operator to pass multiple parameters to object with out changing al the current calls to the function.
 const get_yield_for_plant = (...args) => {
   const plant = args[0];
   const num_amount_of_influence = [];
-  if (args.length > 1) {
+  console.log(args.length)
+  if (args.length > 1 && args[1] !== undefined) {
     const env_vars = args[1];
 
     const env_vars_of_influence = Object.getOwnPropertyNames(env_vars);
@@ -16,7 +13,7 @@ const get_yield_for_plant = (...args) => {
     if (plant.factors !== undefined) {
       // loop tru the factors
       env_vars_of_influence.forEach(item => {
-        const text_amount_of_influence = env_vars[item];
+      const text_amount_of_influence = env_vars[item];
         // check if the environment variabele influences the plant
         if (plant.factors[item] !== undefined) {
           // if so store the percentage in a array
@@ -25,21 +22,20 @@ const get_yield_for_plant = (...args) => {
       })
     }
   }
-  if (num_amount_of_influence.length !== null) {
-    const calculated_plant_yield = num_amount_of_influence.reduce((result, percentage) => {
-      return result * ((100 + percentage) / 100)
-    }, plant.yield);
-    return Math.round(calculated_plant_yield*10) / 10;
-  } else {
-   return plant.yield;
-  }
+  
+  // if there are no environmental influences, just return the plant.yield
+  if (num_amount_of_influence.length === null) return plant.yield;
+
+  // calculate the yield depended of the influence in percentages
+  const calculated_plant_yield = num_amount_of_influence.reduce((result, percentage) => result * ((100 + percentage) / 100), plant.yield)
+  // befor return round it to 1 decimal
+  return Math.round(calculated_plant_yield*10) / 10;
 }
 
 // display num_plants * yield per plant
-const get_yield_for_crop = (input) => {
-  // console.log('Heeft die property factors: ', input[0].hasOwnProperty('yield'));
-  // console.log('alle object properties: ', Object.getOwnPropertyNames(input[0].crop))
-  return input.num_plants * get_yield_for_plant(input.crop);
+const get_yield_for_crop = (...args) => {
+  const [input, env_factors] = args;
+  return input.num_plants * get_yield_for_plant(input.crop, env_factors);
 }
 
 // total the sum of all yields of all crops
