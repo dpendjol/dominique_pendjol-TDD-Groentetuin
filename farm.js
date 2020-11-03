@@ -45,13 +45,22 @@ const get_costs_for_plants = (plant) => plant.costs;
 const get_costs_for_crop = (input) => input.num_plants * get_costs_for_plants(input.crop);
 
 // revenue is the yield per plant * sales price per yield
-const get_revenue_for_plant = (plant) => plant.yield * plant.sales_price;
+const get_revenue_for_plant = (...args) => {
+  const [plant, env_factors] = args;
+  return get_yield_for_plant(plant, env_factors) * plant.sales_price;
+}
 
 // revenue per crop is the revenue per plant * number of plants in a crop
-const get_revenue_for_crop = (input) => input.num_plants * get_revenue_for_plant(input.crop);
+const get_revenue_for_crop = (...args) => {
+  const [input, env_factors] = args;
+  return input.num_plants * get_revenue_for_plant(input.crop, env_factors);
+}
 
 // profit is revenue - costs
-const get_profit_for_crop = (input) => get_revenue_for_crop(input) - get_costs_for_crop(input);
+const get_profit_for_crop = (... args) => {
+  const [input, env_factors] = args;
+  return get_revenue_for_crop(input, env_factors) - get_costs_for_crop(input, env_factors);
+}
 
 // total profits is the sum of all seperate profits
 const get_total_profit = (input) => input.crops.reduce((total, item) => total + get_profit_for_crop(item),0)
