@@ -200,7 +200,7 @@ describe("get_yield_for_plant - enviroment", () => {
   test("Get yield for plant with environment factor sun = high, wind = medium", () => {
     expect(get_yield_for_plant(corn, environment_factors_2)).toBe(31.5);
   });
-  test("Get yield for plant with enviroment factor sun = high, wind = medium, soil = high", () => {
+  test("Get yield for plant with enviroment factor sun = high, wind = medium, soil = high (shouldn't make a change to the one with-out soil", () => {
     expect(get_yield_for_plant(corn, environment_factors_3)).toBe(31.5);
   })
 });
@@ -254,7 +254,66 @@ describe("get_yield_for_crop - environment", () => {
   test("Get yield for crop with environment factor sun = high, wind = medium", () => {
     expect(get_yield_for_crop(input, environment_factors_2)).toBe(315);
   });
-  test("Get yield for crop with enviroment factor sun = high, wind = medium, soil = high", () => {
+  test("Get yield for crop with enviroment factor sun = high, wind = medium, soil = high (shouldn't make a change to the one with-out soil", () => {
     expect(get_yield_for_crop(input, environment_factors_3)).toBe(315);
   })
 });
+
+
+describe("get_profit_for_crop - environment", () => {
+  const corn = {
+    name: "corn",
+    yield: 30,
+    costs: 0.5,
+    sales_price: 2,
+    factors: {
+      sun: {
+        low: -50,
+        medium: 0,
+        high: 50,
+      },
+      wind: {
+        low: 100,
+        medium: -30,
+        high: -60,
+      },
+      rain: {
+        low: 20,
+        medium: 30,
+        high: 40,
+      }
+    },
+  };
+  
+  const environment_factors_1 = {
+    sun: "low",
+    wind: "medium"
+  };
+
+  const environment_factors_2 = {
+    sun: "high",
+    wind: "medium"
+  }
+
+  const environment_factors_3 = {
+    sun: "high",
+    wind: "medium",
+    soil: "high"
+  }
+
+  const input = {
+    crop: corn,
+    num_plants: 10, //origineel is num_crops, maar naamgeving verwarrend gekozen. Dit is een input in de grond van het gewas corn bestaande uit 10 planten
+  };
+  test("Get profit for crop with environment factor sun = low, wind = medium", () => {
+    expect(get_profit_for_crop(input, environment_factors_1)).toBe(205);
+  });
+  test("Get profit for crop with environment factor sun = high, wind = medium", () => {
+    expect(get_profit_for_crop(input, environment_factors_2)).toBe(625);
+  });
+  test("Get profit for crop with enviroment factor sun = high, wind = medium, soil = high (shouldn't make a change to the one with-out soil", () => {
+    expect(get_profit_for_crop(input, environment_factors_3)).toBe(625);
+  })
+});
+
+
